@@ -35,3 +35,6 @@ ALTER TABLE book
     ADD CONSTRAINT book_pub_year_lowerbound CHECK (pub_year >= 0),
     ADD CONSTRAINT book_rating_lowerbound CHECK (rating >= 0::numeric),
     ADD CONSTRAINT book_rating_upperbound CHECK (rating <= 5::numeric);
+
+GRANT CONNECT ON DATABASE donotban TO donotban;
+GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON TABLE book TO donotban;
