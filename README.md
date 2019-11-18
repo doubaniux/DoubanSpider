@@ -66,7 +66,7 @@ Modify host, or also other parameters in `config/postgres.json`
     "port" : 5432
 }
 ```
-Change isolation level in `spiders/books.py`
+Change isolation level in `pipelines.py`
 ```python
 self.conn.isolation_level = psycopg2.extensions.ISOLATION_LEVEL_READ_UNCOMMITTED
 ```
