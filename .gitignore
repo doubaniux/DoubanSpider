@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# VS Code configuration files
+.vscode/
+
+# CSV and JSON
+*.csv
+*.json
+!douban/config/*.json
+
+# flake8
+tox.ini
+
+# Downloaded html files
+*.html
+
+# todo
+todo.md

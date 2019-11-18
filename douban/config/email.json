@@ -1,0 +1,7 @@
+{
+    "sender" : "youremail@example.com",
+    "receiver" : "anotheremail@example.com",
+    "password" : "authcode",
+    "server" : "smtp.example.com",
+    "port" : 465
+}
