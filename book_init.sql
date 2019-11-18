@@ -2,6 +2,8 @@ CREATE USER donotban WITH PASSWORD 'pleasedonotban';
 
 CREATE DATABASE donotban WITH OWNER donotban;
 
+\c donotban
+
 CREATE SEQUENCE book_id_seq AS integer;
 
 CREATE TABLE book (
