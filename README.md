@@ -27,7 +27,7 @@ Install PostgreSQL
 ```bash
 $ sudo apt install postgresql-11 libpq-dev
 ```
-If you are in China, consider use [tencent mirror](https://mirrors.cloud.tencent.com/).
+If you are in China, consider using [tencent mirror](https://mirrors.cloud.tencent.com/).
 
 ### Configure PostgreSQL
 Create user, database, and table from sql file
@@ -102,6 +102,6 @@ Edit `douban/config/email.json`, so that when the spider terminated it will send
 ```
 ## Start
 ```bash
-# by using -s JOBDIR=/dir/ you can save the spider state when terminate the spider
+# by using -s JOBDIR=/dir/ you can save the spider state when pause the spider
 $ nohup scrapy crawl book -L INFO -s JOBDIR=/dir/to/save/> douban_spider.log 2>&1 &
 ```
