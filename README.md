@@ -83,8 +83,8 @@ PROXY_URL = "http://username:password@yourproxyaddress:port"
 If you are using [Luminati](https://luminati.io) service, check the json file under `douban/config/luminati.json`. A Luminati middleware is provided whose default behavior is changing IP on each request.
 ```json
 {
-    "username": "hl_04d14221",
-    "password": "z050nhgj24vu",
+    "username": "username",
+    "password": "password",
     "country": "cn"
 }
 ```
