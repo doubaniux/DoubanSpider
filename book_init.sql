@@ -18,9 +18,9 @@ CREATE TABLE book (
     pub_year integer,
     pub_month integer,
     binding character varying(50) NOT NULL DEFAULT ''::character varying,
-    price character varying(20) NOT NULL DEFAULT ''::character varying,
+    price character varying(50) NOT NULL DEFAULT ''::character varying,
     pages integer,
-    isbn character varying(20) UNIQUE NOT NULL,
+    isbn character varying(50) UNIQUE NOT NULL,
     other jsonb,
     img_url character varying(500) NOT NULL DEFAULT ''::character varying,
     rating numeric(2, 1),
@@ -38,4 +38,4 @@ ALTER TABLE book
 
 GRANT CONNECT ON DATABASE donotban TO donotban;
 GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON TABLE book TO donotban;
-GRANT USAGE ON SEQUENCE book_id_seq TO donotban;
+GRANT ALL PRIVILEGES ON SEQUENCE book_id_seq TO donotban;

@@ -55,7 +55,7 @@ default_transaction_isolation = SET_YOUR_LEVEL
 $ pip install scrapy psycopg2
 ```
 ### Configure Psycopg2 Connection
-Modify host, or also other parameters in `config/postgres.json`
+Modify host, or also other parameters in `douban/config/postgres.json`
 
 ```json
 {
@@ -66,13 +66,13 @@ Modify host, or also other parameters in `config/postgres.json`
     "port" : 5432
 }
 ```
-Change isolation level in `pipelines.py`
+Change isolation level in `douban/pipelines.py`
 ```python
 self.conn.isolation_level = psycopg2.extensions.ISOLATION_LEVEL_READ_UNCOMMITTED
 ```
 
 ### Configure Scrapy Proxy
-In `settings.py`
+In `douban/settings.py`
 ```python
 # API that returns proxy address
 # note that also the json key in middlewares.py need to be altered according to your API
@@ -80,9 +80,17 @@ PROXY_API = "http://127.0.0.1:5010/get/"
 # static prxoy address
 PROXY_URL = "http://username:password@yourproxyaddress:port"
 ```
+If you are using [Luminati](https://luminati.io) service, check the json file under `douban/config/luminati.json`. A Luminati middleware is provided whose default behavior is changing IP on each request.
+```json
+{
+    "username": "hl_04d14221",
+    "password": "z050nhgj24vu",
+    "country": "cn"
+}
+```
 
 ### Set up Email
-Edit `config/email.json`, so that when the spider terminated it will send an email to the receiver
+Edit `douban/config/email.json`, so that when the spider terminated it will send an email to the receiver
 ```json
 {
     "sender" : "youremail@example.com",
@@ -94,5 +102,6 @@ Edit `config/email.json`, so that when the spider terminated it will send an ema
 ```
 ## Start
 ```bash
-$ nohup scrapy crawl book -L INFO > douban_spider.log 2>&1 &
+# by using -s JOBDIR=/dir/ you can save the spider state when terminate the spider
+$ nohup scrapy crawl book -L INFO -s JOBDIR=/dir/to/save/> douban_spider.log 2>&1 &
 ```

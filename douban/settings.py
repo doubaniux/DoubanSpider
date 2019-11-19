@@ -86,11 +86,11 @@ AUTOTHROTTLE_ENABLED = True
 # The initial download delay
 AUTOTHROTTLE_START_DELAY = 1
 # The maximum download delay to be set in case of high latencies
-AUTOTHROTTLE_MAX_DELAY = 5
+AUTOTHROTTLE_MAX_DELAY = 3
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
 # seems like 1 is the best value uising SimpleProxyMiddleware
-AUTOTHROTTLE_TARGET_CONCURRENCY = 1
+AUTOTHROTTLE_TARGET_CONCURRENCY = 16
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG = True
 AUTOTHROTTLE_DEBUG = False
@@ -110,5 +110,7 @@ FEED_EXPORT_ENCODING = 'utf-8'
 PROXY_API = "http://127.0.0.1:5010/get/"
 # static prxoy address
 PROXY_URL = "http://username:password@yourproxyaddress:port"
+# luminati proxy
+BASE_PROXY_URL = "http://lum-customer-%(username)s-zone-static-country-%(country)s-session-%(session_id)s:%(password)s@zproxy.lum-superproxy.io:22225"
 
 DOWNLOAD_TIMEOUT = 15

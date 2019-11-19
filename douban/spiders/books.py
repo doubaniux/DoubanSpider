@@ -19,8 +19,8 @@ class BookSpider(scrapy.Spider):
             users = list(map(lambda x: x.strip(), f.readlines()))
         base_url = 'https://book.douban.com/people/'
         urls = list(map(lambda x: base_url + x + '/', users))
-        # some buddy who has about 50 books marked, used for testing
-        urls = ["https://book.douban.com/people/91014926/"]
+        # some buddy used for testing
+        urls = ["https://book.douban.com/people/JustusChou/"]
     
         for url in urls:
             yield scrapy.Request(
