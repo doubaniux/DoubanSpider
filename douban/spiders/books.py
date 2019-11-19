@@ -20,8 +20,8 @@ class BookSpider(scrapy.Spider):
         base_url = 'https://book.douban.com/people/'
         urls = list(map(lambda x: base_url + x + '/', users))
         # some buddy used for testing
-        urls = ["https://book.douban.com/people/JustusChou/"]
-    
+        #urls = ["https://book.douban.com/people/JustusChou/"]
+
         for url in urls:
             yield scrapy.Request(
                 url=url,
@@ -35,7 +35,7 @@ class BookSpider(scrapy.Spider):
             for list_page in response.xpath('//*[@id="db-book-mine"]//h2//a/@href'):
                 list_page_url = list_page.get().strip()
                 yield response.follow(list_page_url, self.parse_list, dont_filter=True,)
-            
+
         except:
             self.log("parsing failed", level=logging.ERROR)
             html_file_name = (time.asctime() + 'count.html').replace(' ', '_').replace(':', '-')
@@ -133,7 +133,7 @@ class BookSpider(scrapy.Spider):
                     translators.append(translator.get().strip())
             else:
                 translators = None
-            
+
             other = {}
             cncode_elem = response.xpath("//div[@id='info']//span[text()='统一书号:']/following::text()")
             if cncode_elem:
@@ -150,20 +150,20 @@ class BookSpider(scrapy.Spider):
             language = None
 
             book = BookItem(
-                    title = title,
-                    subtitle = subtitle,
-                    orig_title = orig_title,
-                    author = authors,
-                    translator = translators,
-                    language = language,
-                    pub_house = pub_house,
-                    pub_date = pub_date,
-                    binding = binding,
-                    price = price,
-                    pages = pages,
-                    isbn = isbn,
-                    other = other,
-                    img_url = img_url,
+                    title=title,
+                    subtitle=subtitle,
+                    orig_title=orig_title,
+                    author=authors,
+                    translator=translators,
+                    language=language,
+                    pub_house=pub_house,
+                    pub_date=pub_date,
+                    binding=binding,
+                    price=price,
+                    pages=pages,
+                    isbn=isbn,
+                    other=other,
+                    img_url=img_url,
             )
             yield book
 

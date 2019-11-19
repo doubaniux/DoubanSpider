@@ -20,7 +20,7 @@ CREATE TABLE book (
     binding character varying(50) NOT NULL DEFAULT ''::character varying,
     price character varying(50) NOT NULL DEFAULT ''::character varying,
     pages integer,
-    isbn character varying(50) UNIQUE NOT NULL,
+    isbn character varying(50) UNIQUE,
     other jsonb,
     img_url character varying(500) NOT NULL DEFAULT ''::character varying,
     rating numeric(2, 1),
