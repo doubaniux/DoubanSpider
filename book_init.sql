@@ -1,10 +1,12 @@
-CREATE USER donotban WITH PASSWORD 'pleasedonotban';
+CREATE USER donotban WITH PASSWORD 'donotbansilvousplait';
 
 CREATE DATABASE donotban WITH OWNER donotban;
 
 \c donotban
 
 CREATE SEQUENCE book_id_seq AS integer;
+
+ALTER SEQUENCE book_id_seq OWNER TO donotban;
 
 CREATE TABLE book (
     id integer PRIMARY KEY NOT NULL DEFAULT nextval('book_id_seq'::regclass),
@@ -34,8 +36,9 @@ ALTER TABLE book
     ADD CONSTRAINT book_pub_month_upperbound CHECK (pub_month <= 12),
     ADD CONSTRAINT book_pub_year_lowerbound CHECK (pub_year >= 0),
     ADD CONSTRAINT book_rating_lowerbound CHECK (rating >= 0::numeric),
-    ADD CONSTRAINT book_rating_upperbound CHECK (rating <= 5::numeric);
+    ADD CONSTRAINT book_rating_upperbound CHECK (rating <= 5::numeric),
+    OWNER TO donotban;
 
 GRANT CONNECT ON DATABASE donotban TO donotban;
-GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON TABLE book TO donotban;
-GRANT ALL PRIVILEGES ON SEQUENCE book_id_seq TO donotban;
+GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON ALL TABLES IN SCHEMA public TO donotban;
+GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO donotban;
