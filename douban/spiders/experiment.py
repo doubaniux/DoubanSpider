@@ -6,6 +6,7 @@ import os
 import csv
 import logging
 import time
+import re
 from scrapy.http import Request
 from douban.items import IsbnItem
 from douban.email import send_email
