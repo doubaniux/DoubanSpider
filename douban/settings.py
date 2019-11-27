@@ -112,4 +112,4 @@ PROXY_URL = "http://username:password@yourproxyaddress:port"
 # luminati proxy
 BASE_PROXY_URL = "http://lum-customer-%(username)s-zone-static-country-%(country)s-session-%(session_id)s:%(password)s@zproxy.lum-superproxy.io:22225"
 
-DOWNLOAD_TIMEOUT = 15
+DOWNLOAD_TIMEOUT = 5
