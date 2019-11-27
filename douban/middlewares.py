@@ -104,8 +104,8 @@ class LuminatiProxyMiddleware:
         return response
 
     def process_exception(self, request, exception, spider):
-        self.logger.error(exception)
-        self.logger.info(f"exception catched, retrying request to {request.url}")
+        self.logger.debug(exception)
+        self.logger.debug(f"exception catched, retrying request to {request.url}")
         return request
 
     def __acquire_proxy(self):
