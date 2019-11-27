@@ -176,39 +176,76 @@ class TestSpider(scrapy.Spider):
 class BookCountingSpider(scrapy.Spider):
     name = 'count'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.counter = set()
+        self.regex = re.compile(r"\d+\d*")
+
     def start_requests(self):
         with open(os.path.join(ROOT_DIR, 'user_list.txt'), 'r', encoding='utf-8') as f:
             users = list(map(lambda x: x.strip(), f.readlines()))
         base_url = 'https://book.douban.com/people/'
         urls = list(map(lambda x: base_url + x + '/', users))
 
-        self.counter = 0
-
         for url in urls:
             yield scrapy.Request(
                 url=url,
-                callback=self.parse,
+                callback=self.parse_home,
                 dont_filter=True,
             )
 
-    def parse(self, response):
+    def parse_home(self, response):
         try:
-            for number in response.xpath('//*[@id="db-book-mine"]//h2//a/text()'):
-                self.counter += int(number.get()[:-1])
-            
-            msg = f"now has counted {self.counter} books."
-            self.log(msg, level=logging.INFO)
+            # go to do/collect/wish list page
+            for list_page in response.xpath('//*[@id="db-book-mine"]//h2//a/@href'):
+                list_page_url = list_page.get().strip()
+                yield response.follow(list_page_url, self.parse_list, dont_filter=True, )
+
         except:
             self.log("parsing failed", level=logging.ERROR)
-            with open(os.path.join(HTML_DIR, 'count.html'), 'w', encoding='utf-8') as f:
+            html_file_name = (time.asctime() + 'count.html').replace(' ', '_').replace(':', '-')
+            with open(os.path.join(HTML_DIR, html_file_name), 'w', encoding='utf-8') as f:
                 f.write(response.text)
-            with open(os.path.join(HTML_DIR, 'count.html'), 'a', encoding='utf-8') as f:
+            with open(os.path.join(HTML_DIR, html_file_name), 'a', encoding='utf-8') as f:
                 f.writelines(response.url)
                 f.writelines(time.asctime())
-            yield Request(response.url, callback=self.parse, dont_filter=True,)
+            yield Request(response.url, callback=self.parse_home, dont_filter=True, )
+
+    def parse_list(self, response):
+        if not response.css('.nav-logo'):
+            self.log(
+                f"failed to load website logo at {response.url}, retrying request",
+                level=logging.ERROR
+            )
+            html_file_name = (time.asctime() + 'no_logo.html').replace(' ', '_').replace(':', '-')
+            with open(os.path.join(HTML_DIR, html_file_name), 'w', encoding='utf-8') as f:
+                f.write(response.text)
+            with open(os.path.join(HTML_DIR, html_file_name), 'a', encoding='utf-8') as f:
+                f.writelines(response.url)
+                f.writelines(time.asctime())
+            yield Request(response.url, callback=self.parse_list, dont_filter=True, )
+        # there should be books on the page
+        elif response.css('li.subject-item'):
+            for book in response.css('li.subject-item'):
+                detail_url = book.xpath('div[2]/h2/a/@href').get().strip()
+                subject_number = int(self.regex.findall(detail_url)[0])
+                self.counter.add(subject_number)
+                # with open(os.path.join(ROOT_DIR, 'count.log'),'w') as fp:
+                    # fp.write(str(len(self.counter)))
+            # under some tags there is no paginator
+            if response.css('.paginator'):
+                next_page = response.css('.next a::attr(href)').get()
+                # if hasn't reached the last page yet
+                if next_page:
+                    yield response.follow(next_page.strip(), self.parse_list, dont_filter=True, )
+                else:
+                    self.log(f"reached the end")
+            else:
+                self.log("no paginator in this page", level=logging.DEBUG)
 
     def closed(self, reason):
-        msg = f"{self.counter} books in total."
+        total = len(self.counter)
+        msg = f"{total} books in total."
         self.log(msg, level=logging.INFO)
         send_email("book counting has finished.", msg)
 
