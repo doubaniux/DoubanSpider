@@ -9,6 +9,7 @@ import re
 import json
 import logging
 import psycopg2
+import psycopg2.extras
 from psycopg2.errors import UniqueViolation
 from douban.definitions import CONFIG_DIR
 
