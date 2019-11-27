@@ -63,10 +63,9 @@ class BookPipeline(object):
             elif len(year_month_day) == 1:
                 item['pub_year'] = int(year_month_day[0])
                 item['pub_month'] = None
-            elif len(year_month_day) == 0:
+            else:
                 item['pub_year'] = None
                 item['pub_month'] = None
-            else:
                 self.logger.info(f"unexpected pub_date pattern: {item['pub_date']}")
             # simple year and month range validation
             if item['pub_year'] and item['pub_month'] and item['pub_year'] < item['pub_month']:
