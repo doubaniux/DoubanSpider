@@ -46,7 +46,6 @@ DEFAULT_REQUEST_HEADERS = {
     'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
     'Accept-Encoding': 'gzip, deflate, br',
     'Connection': 'keep-alive',
-    #'Cookie': 'bid=uJqh6AOxbMQ; douban-fav-remind=1; __utma=30149280.55746826.1572577334.1573517700.1573524975.12; __utmz=30149280.1572577334.1.1.utmcsr=bing|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); ll="118124"; gr_user_id=1726be90-a60e-4e97-8ce1-e044cad3617f; _vwo_uuid_v2=D8C2CAAC511C30838C970EBE9083C1D2B|dff8f1e50921397b98c19f14da75eaff; _pk_ref.100001.3ac3=%5B%22%22%2C%22%22%2C1573524974%2C%22https%3A%2F%2Fwww.douban.com%2F%22%5D; _pk_id.100001.3ac3=524e8ad2bcf516ff.1572849455.8.1573525114.1573518276.; __utma=81379588.1024998882.1572849456.1573518175.1573524975.8; __utmz=81379588.1573518175.7.4.utmcsr=douban.com|utmccn=(referral)|utmcmd=referral|utmcct=/; __yadk_uid=6jWdnb0y9C8NkHqAURbSUESMPn30pX7P; viewed="25862578_34721400_10763902_1084336_34866821_33440205_1148282_34809080_33436278"; __gads=Test; ct=y; __utmc=30149280; ap_v=0,6.0; __utmc=81379588; _pk_ses.100001.3ac3=*; __utmb=30149280.2.10.1573524975; __utmt_douban=1; __utmb=81379588.2.10.1573524975; __utmt=1',
     'DNT': '1',
     'Upgrade-Insecure-Requests': '1',
     'Cache-Control': 'max-age=0',
@@ -61,9 +60,11 @@ DEFAULT_REQUEST_HEADERS = {
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    # 'douban.middlewares.RandomProxyMiddleware': 740,
-    # 'douban.middlewares.SimpleProxyMiddleware': 740,
-    'douban.middlewares.LuminatiProxyMiddleware': 740,
+    # 'douban.middlewares.RandomProxyMiddleware': 100,
+    # 'douban.middlewares.SimpleProxyMiddleware': 100,
+    'douban.middlewares.LuminatiProxyMiddleware': 100,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 105,
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
 }
 
 # Enable or disable extensions
