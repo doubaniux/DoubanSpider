@@ -72,10 +72,6 @@ Modify host, or also other parameters in `douban/config/postgres.json`
     "port" : 5432
 }
 ```
-Change isolation level in `douban/pipelines.py`
-```python
-self.conn.isolation_level = psycopg2.extensions.ISOLATION_LEVEL_READ_UNCOMMITTED
-```
 
 ### Configure Scrapy Proxy
 In `douban/settings.py`
