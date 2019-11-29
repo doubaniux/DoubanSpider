@@ -45,11 +45,17 @@ Edit `/etc/postgresql/11/main/postgresql.conf`, modify some settings
 ```bash
 # recommended
 client_encoding = 'UTF8'
-# only effects postgres functions like now()
+# only affects postgres functions like now()
 timezone = 'Asia/Shanghai'
 # optional
 default_transaction_isolation = SET_YOUR_LEVEL
 ```
+
+Finally, restart postgresql
+```bash
+$ sudo service postgresql restart
+```
+
 ### Install Scrapy and Psycopg2
 ```bash
 $ pip install scrapy psycopg2
