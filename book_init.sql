@@ -27,7 +27,7 @@ CREATE TABLE book (
     img_url character varying(500) NOT NULL DEFAULT ''::character varying,
     rating numeric(2, 1),
     edited_time timestamp with time zone NOT NULL DEFAULT now(),
-    is_valid boolean NOT NULL DEFAULT true
+    is_deleted boolean NOT NULL DEFAULT true
 );
 
 ALTER TABLE book
