@@ -25,7 +25,7 @@ CREATE TABLE book (
     isbn character varying(50) UNIQUE,
     other jsonb,
     img_url character varying(500) NOT NULL DEFAULT ''::character varying,
-    rating numeric(2, 1),
+    rating numeric(64, 63),
     edited_time timestamp with time zone NOT NULL DEFAULT now(),
     is_deleted boolean NOT NULL DEFAULT false
 );
