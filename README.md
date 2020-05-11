@@ -8,6 +8,7 @@ A scrapy project scraping data from [douban](https://www.douban.com).
 - Python3.6 or later
 - Scrapy
 - Psycopg2
+- Pillow
 
 ## Configuration
 

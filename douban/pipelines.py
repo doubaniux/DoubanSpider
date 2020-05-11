@@ -10,8 +10,10 @@ import json
 import logging
 import psycopg2
 import psycopg2.extras
+import scrapy
 from psycopg2.errors import UniqueViolation
 from douban.definitions import CONFIG_DIR
+from scrapy.pipelines.images import ImagesPipeline
 
 class BookPipeline(object):
 
@@ -89,3 +91,28 @@ class BookPipeline(object):
         if spider.name == "book":
             self.cur.close()
             self.conn.close()
+
+
+class BookImagePipeline(ImagesPipeline):
+
+    def __init__(self, *args, **kwargs):
+        super(BookImagePipeline, self).__init__(*args, **kwargs)
+        self.logger = logging.Logger(self.__class__.__name__)
+
+    def get_media_requests(self, item, info):
+        img_url = item['img_url']
+
+        if img_url:
+            yield scrapy.Request(url=img_url)
+        else:
+            self.logger.info('No book cover found.')
+            return
+
+    def item_completed(self, results, item, info):
+        image_paths = [x['path'] for ok, x in results if ok]
+
+        if image_paths:
+            self.logger.info(f'Image saved at {image_paths}')
+        else:
+            self.logger.info('Image not saved')
+        return item

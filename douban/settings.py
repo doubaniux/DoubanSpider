@@ -40,7 +40,6 @@ TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
-    'Host': 'book.douban.com',
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; rv:70.0) Gecko/20100101 Firefox/70.0',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
@@ -77,6 +76,7 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'douban.pipelines.BookPipeline': 300,
+   'douban.pipelines.BookImagePipeline': 200,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -113,3 +113,5 @@ PROXY_URL = "http://username:password@yourproxyaddress:port"
 BASE_PROXY_URL = "http://lum-customer-%(username)s-zone-static-country-%(country)s-session-%(session_id)s:%(password)s@zproxy.lum-superproxy.io:22225"
 
 DOWNLOAD_TIMEOUT = 5
+
+IMAGES_STORE = 'images'
