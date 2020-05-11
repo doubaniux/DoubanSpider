@@ -145,6 +145,21 @@ class BookSpider(scrapy.Spider):
             if imprint_elem:
                 other['imprint'] = imprint_elem.get().strip()
 
+            # brief intro to the book
+            brief_elem = response.xpath("//h2/span[text()='内容简介']/../following-sibling::div[1]//div[@class='intro']")
+            if brief_elem:
+                other['brief'] = '\n'.join(p.strip() for p in brief_elem[-1].xpath('p/text()').getall())
+
+            # biography of the author
+            bio_elem = response.xpath("//h2/span[text()='作者简介']/../following-sibling::div[1]//div[@class='intro']")
+            if bio_elem:
+                other['bio'] = '\n'.join(p.strip() for p in bio_elem[-1].xpath('p/text()').getall())
+
+            # table of contents
+            tabcon_elem = response.xpath("//h2/span[text()='目录']/../following-sibling::div[1]//div[@class='intro']")
+            if tabcon_elem:
+                other['tabcon'] = '\n'.join(p.strip() for p in tabcon_elem[-1].xpath('p/text()').getall())
+
             # language is expected to be filled by the data from worldcat.org
             # it is way too hassling access worldcat.org in China
             language = None
